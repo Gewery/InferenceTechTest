@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from InferenceTechTest.views import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('article.urls'))
+    path('api/', include('messaging.urls')),
+    path('api/auth/login/', TokenCreateView.as_view()),
+    path('api/auth/logout/', TokenDestroyView.as_view()),
 ]
