@@ -9,7 +9,7 @@ from django.db.models import Q
 
 class MessageCreateView(generics.CreateAPIView):
     serializer_class = MessageCreateSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
 
 
 class MessagesListView(generics.ListAPIView):
