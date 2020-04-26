@@ -21,14 +21,13 @@ class UserAPITests(TestCase):
         self.assertEqual(Message.objects.get(id=1).recipient, self.user2)
         self.assertEqual(Message.objects.get(id=1).body, "new message")
 
-    def test_get_all_messages(self):
-        Message.objects.create(sender=self.user2, recipient=self.user1, body="new message")
+    def test_get_zero_messages(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.tokenUser1.key)
         response = self.client.get('http://127.0.0.1:8000/api/all/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data), 0)
 
-    def test_recieve_message(self):
+    def test_recieve_messages(self):
         Message.objects.create(sender=self.user2, recipient=self.user1, body="new message")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.tokenUser1.key)
         response = self.client.get('http://127.0.0.1:8000/api/all/')
