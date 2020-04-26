@@ -10,4 +10,4 @@ class Message(models.Model):
     recipient = models.ForeignKey(User, related_name='receivedMessages', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.recipient.username + ' -> ' + self.sender.username
+        return self.sender.username + ' -> ' + self.recipient.username

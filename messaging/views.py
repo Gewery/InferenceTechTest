@@ -18,6 +18,10 @@ class MessagesListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
+        """
+        Get all messages that user allowed to see
+        :return: sent messages + recieved messages
+        """
         user = self.request.user
         return Message.objects.filter(sender=user) | Message.objects.filter(recipient=user)
 
@@ -28,6 +32,10 @@ class MessagesToUserListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
+        """
+        Get all the messages from the chat with a particular user
+        :return: messages from/to user with id=pk
+        """
         pk = self.kwargs['pk']
         user = self.request.user
         return Message.objects.filter(Q(sender=user) & Q(recipient=pk) | Q(sender=pk) & Q(recipient=user))

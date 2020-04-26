@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from .models import Message
-from rest_framework.authentication import TokenAuthentication
 
 
 class MessageCreateSerializer(serializers.ModelSerializer):
+    # User cannot see and change sender of its own message while creating
     sender = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -12,12 +12,10 @@ class MessageCreateSerializer(serializers.ModelSerializer):
 
 
 class MessageDetailSerializer(serializers.ModelSerializer):
-    # sender = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Message
         fields = '__all__'
-        read_only_fields = ['sender', 'recipient']
+        read_only_fields = ['sender', 'recipient'] # Users are not allowed to edit recipient or sender
 
 
 class MessageListSerializer(serializers.ModelSerializer):
